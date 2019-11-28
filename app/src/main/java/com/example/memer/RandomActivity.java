@@ -1,6 +1,7 @@
 package com.example.memer;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -16,6 +17,7 @@ import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
+import connection.handlers.Host;
 import entities.Meme;
 
 import java.io.IOException;
@@ -32,12 +34,14 @@ import okhttp3.Response;
 import controllers.*;
 
 public class RandomActivity extends AppCompatActivity {
-    SharedPreferences prefs;
-    ImageView imageView;
-    TextView titleText, scoreText;
-    SearchView searchView;
+    private SharedPreferences prefs;
+    private ImageView imageView;
+    private TextView titleText, scoreText;
+    private SearchView searchView;
     private String memeName;
     private GetMeme entity;
+    private ConstraintLayout constraintLayout;
+    private View view2, view3, view4;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +69,10 @@ public class RandomActivity extends AppCompatActivity {
         prefs = getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
         entity = new GetMeme(prefs);
 
+        view2 = findViewById(R.id.view2);
+        view3 = findViewById(R.id.view3);
+        view4 = findViewById(R.id.view4);
+        constraintLayout = findViewById(R.id.layoutRandomView);
         imageView = findViewById(R.id.imageView);
         titleText = findViewById(R.id.titleView);
         scoreText =  findViewById(R.id.scoreView);
@@ -79,7 +87,10 @@ public class RandomActivity extends AppCompatActivity {
     }
 
     public void addLike(View view){
-        new AddScore(prefs, memeName, RandomActivity.this);
+        AddScore as = new AddScore(prefs, memeName, RandomActivity.this);
+        if(as.getSucceed()) {
+            scoreText.setText(Integer.parseInt(scoreText.getText().toString().split(" ")[0]) + 1 + " points");
+        }
     }
 
     private void doMagic(){
@@ -89,7 +100,7 @@ public class RandomActivity extends AppCompatActivity {
                 titleText.setText(entity.getMemeTitle());
                 scoreText.setText(entity.getMemeScore());
                 memeName = entity.getMemeName();
-                Picasso.get().load("http://192.168.1.41:8080/images/" + entity.getMemeName()).fit().into(imageView);
+                Picasso.get().load("http://" + Host.IP + ":8080/images/" + entity.getMemeName()).fit().into(imageView);
             }
         });
 

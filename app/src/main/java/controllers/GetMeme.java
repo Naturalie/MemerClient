@@ -10,6 +10,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 
+import connection.handlers.Host;
 import entities.Meme;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -42,7 +43,7 @@ public class GetMeme {
     private boolean doMagic(){
         try{
             OkHttpClient client = new OkHttpClient();
-            String url = "http://192.168.1.41:8080/random";
+            String url = "http://"+ Host.IP + ":8080/random";
             Request request = new Request.Builder()
                     .addHeader("Authorization","Bearer "+ prefs.getString("token",""))
                     .url(url)
@@ -57,7 +58,6 @@ public class GetMeme {
                 final String myResponse = response.body().string();
 
                 if(response.code() == 200){
-                    System.out.println(myResponse);
                     Meme meme = new Meme(myResponse);
                     memeTitle = meme.getImageTitle();
                     memeScore = meme.getImageScore();

@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import java.io.IOException;
 
+import connection.handlers.Host;
 import entities.Score;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -14,12 +15,12 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class AddScore {
-
+boolean succeed = false;
     public AddScore(SharedPreferences prefs, String memeName, Activity activity){
         try {
             OkHttpClient client = new OkHttpClient();
             MediaType MEDIA_TYPE = MediaType.parse("application/json");
-            String url = "http://192.168.1.41:8080/increaseScore";
+            String url = "http://"+ Host.IP + ":8080/increaseScore";
             Score score = new Score(memeName, prefs.getString("token", ""));
 
             RequestBody body = RequestBody.create(MEDIA_TYPE, score.getScoreJSON().toString());
@@ -44,10 +45,13 @@ public class AddScore {
                     System.out.println(myReponse);
                     if(myReponse.equals("false")){
                         Toast.makeText(activity,"You have already liked that! You silly!",Toast.LENGTH_LONG).show();
+                        succeed = false;
                     }else{
                         Toast.makeText(activity,"It's getting even hotter ;)",Toast.LENGTH_LONG).show();
+                        succeed = true;
                     }
                 }else{
+                    succeed = false;
                     Toast.makeText(activity,"Something went wrong!",Toast.LENGTH_LONG).show();
                 }
 
@@ -57,5 +61,9 @@ public class AddScore {
         } catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    public boolean getSucceed(){
+        return this.succeed;
     }
 }

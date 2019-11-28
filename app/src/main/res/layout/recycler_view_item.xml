@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="500dp">
+
+  <Button
+      android:id="@+id/hotmemeButton2"
+      style="@style/Widget.AppCompat.Button.Colored"
+      android:layout_width="213dp"
+      android:layout_height="30dp"
+      android:background="@color/colorPrimaryDark"
+      android:onClick="addLike"
+      android:stateListAnimator="@null"
+      android:text="HOT MEME"
+      android:textIsSelectable="false"
+      android:textSize="24sp"
+      android:textStyle="normal|bold"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+  <ImageView
+      android:id="@+id/imageView2"
+      android:layout_width="353dp"
+      android:layout_height="310dp"
+      android:contentDescription="TODO"
+      android:scaleType="center"
+      app:layout_constraintBottom_toTopOf="@+id/view5"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_bias="0.557"
+      tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+  <View
+      android:id="@+id/view5"
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      android:background="#000000"
+      android:visibility="visible"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.0"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="parent"
+      app:layout_constraintVertical_bias="0.0" />
+
+  <View
+      android:id="@+id/view6"
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      android:background="#000000"
+      android:visibility="visible"
+      app:layout_constraintBottom_toTopOf="@+id/imageView2"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="1.0"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_bias="0.723" />
+
+  <TextView
+      android:id="@+id/titleView2"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textColor="#000000"
+      android:visibility="visible"
+      app:layout_constraintBottom_toTopOf="@+id/view6"
+      app:layout_constraintEnd_toStartOf="@+id/scoreView2"
+      app:layout_constraintHorizontal_bias="0.108"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_bias="0.892" />
+
+  <TextView
+      android:id="@+id/scoreView2"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="28dp"
+      android:textColor="#000000"
+      android:visibility="visible"
+      app:layout_constraintBottom_toTopOf="@+id/view6"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.963"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_bias="0.875" />
+</androidx.constraintlayout.widget.ConstraintLayout>

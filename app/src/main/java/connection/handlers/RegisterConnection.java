@@ -1,25 +1,27 @@
 package connection.handlers;
+
 import java.io.IOException;
 
+import entities.User;
+import entities.UserRegister;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-import okhttp3.MediaType;
-import entities.User;
 
-public class LoginConnection {
-    private String tokenString;
+public class RegisterConnection {
+
     private boolean success;
-    public LoginConnection(User user){
+    public RegisterConnection(UserRegister userRegister){
         success = false;
-        setSuccess(user);
+        setSuccess(userRegister);
     }
-    private boolean doRequest(User user){
+    private boolean doRequest(UserRegister userRegister){
         OkHttpClient client = new OkHttpClient();
         MediaType MEDIA_TYPE = MediaType.parse("application/json");
-        String url = "http://"+ Host.IP + ":8080/login";
-        RequestBody body = RequestBody.create(MEDIA_TYPE, user.getJSON().toString());
+        String url = "http://"+ Host.IP + ":8080/register";
+        RequestBody body = RequestBody.create(MEDIA_TYPE, userRegister.getJSON().toString());
         Request request = new Request.Builder()
                 .url(url)
                 .post(body)
@@ -32,18 +34,18 @@ public class LoginConnection {
             response = client.newCall(request).execute();
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
         if(response.isSuccessful()){
             try {
-                tokenString = response.body().string();
-                if(tokenString.length() < 1){
-                    return false;
-                }
-                else{
-                    return true;
+                if(response.code() == 200) {
+                    if(response.body().string().equals("[]")){
+                        return true;
+                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
+                return false;
             }
         }
         return false;
@@ -52,12 +54,8 @@ public class LoginConnection {
         return this.success;
     }
 
-    private void setSuccess(User user){
-        this.success = doRequest(user);
+    private void setSuccess(UserRegister userRegister){
+        this.success = doRequest(userRegister);
     }
-    public String getTokenString(){
-        return this.tokenString;
-    }
-
 
 }

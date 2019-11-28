@@ -15,6 +15,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 
+import connection.handlers.Host;
 import controllers.AddScore;
 import controllers.GetMeme;
 import controllers.SearchedMeme;
@@ -74,8 +75,12 @@ public class SearchedActivity extends AppCompatActivity {
     }
 
 
-    public void addLike(View view){
-        new AddScore(prefs, memeName, SearchedActivity.this);
+    public void addLike(View view)
+    {
+        AddScore as = new AddScore(prefs, memeName, SearchedActivity.this);
+        if(as.getSucceed()) {
+            scoreText.setText(Integer.parseInt(scoreText.getText().toString().split(" ")[0]) + 1 + " points");
+        }
     }
 
     private void doMagic(){
@@ -85,7 +90,7 @@ public class SearchedActivity extends AppCompatActivity {
                 titleText.setText(entity.getMemeTitle());
                 scoreText.setText(entity.getMemeScore());
                 memeName = entity.getMemeName();
-                Picasso.get().load("http://192.168.1.41:8080/images/" + entity.getMemeName()).fit().into(imageView);
+                Picasso.get().load("http://"+ Host.IP + ":8080/images/" + entity.getMemeName()).fit().into(imageView);
             }
         });
 
