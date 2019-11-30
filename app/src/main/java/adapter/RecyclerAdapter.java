@@ -67,6 +67,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
                 .load("http://" + Host.IP + ":8080/images/" + meme.getImageName())
                 .error(R.drawable.hotmeme)
                 .placeholder(R.drawable.hotmeme)
+                .fit()
                 .into(holder.memeImg);
 
     }
