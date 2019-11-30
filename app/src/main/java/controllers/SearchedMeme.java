@@ -53,7 +53,6 @@ public class SearchedMeme {
                 final String myResponse = response.body().string();
 
                 if(response.code() == 200){
-                    System.out.println(myResponse);
                     Meme meme = new Meme(myResponse);
                     memeTitle = meme.getImageTitle();
                     memeScore = meme.getImageScore();
@@ -62,7 +61,7 @@ public class SearchedMeme {
                 }
             }
         }catch (NullPointerException e){
-            System.out.println("Null");
+            e.printStackTrace();
         }
         catch (Exception e){
             e.printStackTrace();

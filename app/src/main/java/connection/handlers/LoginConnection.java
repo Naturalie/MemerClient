@@ -35,12 +35,15 @@ public class LoginConnection {
         }
         if(response.isSuccessful()){
             try {
-                tokenString = response.body().string();
-                if(tokenString.length() < 1){
+                if(response.code() == 200) {
+                    tokenString = response.body().string();
+                    if (tokenString.length() < 1) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                }else {
                     return false;
-                }
-                else{
-                    return true;
                 }
             } catch (IOException e) {
                 e.printStackTrace();

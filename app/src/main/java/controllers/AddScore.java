@@ -15,8 +15,8 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class AddScore {
-boolean succeed = false;
-    public AddScore(SharedPreferences prefs, String memeName, Activity activity){
+private boolean succeed = false;
+    public AddScore(SharedPreferences prefs, String memeName){
         try {
             OkHttpClient client = new OkHttpClient();
             MediaType MEDIA_TYPE = MediaType.parse("application/json");
@@ -44,20 +44,17 @@ boolean succeed = false;
                 if(response.code() == 200){
                     System.out.println(myReponse);
                     if(myReponse.equals("false")){
-                        Toast.makeText(activity,"You have already liked that! You silly!",Toast.LENGTH_LONG).show();
                         succeed = false;
                     }else{
-                        Toast.makeText(activity,"It's getting even hotter ;)",Toast.LENGTH_LONG).show();
                         succeed = true;
                     }
                 }else{
                     succeed = false;
-                    Toast.makeText(activity,"Something went wrong!",Toast.LENGTH_LONG).show();
                 }
 
             }
         }catch (NullPointerException e){
-            System.out.println("Null");
+            e.printStackTrace();
         } catch (Exception e){
             e.printStackTrace();
         }

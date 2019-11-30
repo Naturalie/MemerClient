@@ -16,7 +16,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
-    private SharedPreferences preferences = null;
+    public static SharedPreferences preferences;
     private EditText login, password;
 
     @Override
@@ -59,9 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         preferences = getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
         preferences.edit().putString("token", token).apply();
     }
-    public String getToken(){
-        return preferences.getString("token","");
-    }
+
 
 }
 

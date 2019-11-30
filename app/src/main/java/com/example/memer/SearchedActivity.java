@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -77,9 +78,12 @@ public class SearchedActivity extends AppCompatActivity {
 
     public void addLike(View view)
     {
-        AddScore as = new AddScore(prefs, memeName, SearchedActivity.this);
+        AddScore as = new AddScore(prefs, memeName);
         if(as.getSucceed()) {
             scoreText.setText(Integer.parseInt(scoreText.getText().toString().split(" ")[0]) + 1 + " points");
+            Toast.makeText(this, "It's gettin' even hotter ;)", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(this, "You have already liked that!", Toast.LENGTH_SHORT).show();
         }
     }
 
