@@ -1,6 +1,7 @@
 package com.example.memer;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,28 +11,22 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
 
+import connection.handlers.Host;
 import controllers.AddScore;
-import controllers.GetMeme;
 import controllers.SearchedMeme;
-import entities.Meme;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 public class SearchedActivity extends AppCompatActivity {
-    SharedPreferences prefs;
-    ImageView imageView;
-    TextView titleText, scoreText;
-    SearchView searchView;
+    private SharedPreferences prefs;
+    private ImageView imageView;
+    private TextView titleText, scoreText, errorText;
+    private SearchView searchView;
     private String memeName;
+    private ConstraintLayout layout;
     private SearchedMeme entity;
 
     @Override
@@ -39,7 +34,39 @@ public class SearchedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_searched);
 
+        setView();
+        doMagic();
+
+
+    }
+
+
+    public void addLike(View view)
+    {
+        AddScore as = new AddScore(prefs, memeName);
+        if(as.getSucceed() == 0) {
+            scoreText.setText(Integer.parseInt(scoreText.getText().toString().split(" ")[0]) + 1 + " points");
+            Toast.makeText(this, "It's gettin' even hotter ;)", Toast.LENGTH_SHORT).show();
+        }else if (as.getSucceed() == 1){
+            Toast.makeText(this, "You have already liked that!", Toast.LENGTH_SHORT).show();
+        }else if (as.getSucceed() == 2){
+            Intent intent = new Intent(SearchedActivity.this, LoginActivity.class);
+            finish();
+            startActivity(intent);
+            Toast.makeText(this, "Token is no longer valid!", Toast.LENGTH_SHORT).show();
+            overridePendingTransition(0, 0);
+        }else{
+            Intent intent = new Intent(SearchedActivity.this, LoginActivity.class);
+            finish();
+            startActivity(intent);
+            Toast.makeText(this, "Server Error occured!", Toast.LENGTH_SHORT).show();
+            overridePendingTransition(0, 0);
+        }
+    }
+
+    private void setView(){
         //searchBar code - change activity on search
+        layout = findViewById(R.id.constraintLayout);
         searchView = findViewById(R.id.search);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -63,31 +90,34 @@ public class SearchedActivity extends AppCompatActivity {
 
         imageView = findViewById(R.id.imageView);
         titleText = findViewById(R.id.titleView);
-        scoreText =  findViewById(R.id.scoreView);
-
-        if(entity.succeed()){
-            doMagic();
-        }
-        else{
-            System.out.println("no nie dziala");
-        }
-    }
-
-
-    public void addLike(View view){
-        new AddScore(prefs, memeName, SearchedActivity.this);
+        scoreText = findViewById(R.id.scoreView);
+        errorText = findViewById(R.id.errorView3);
     }
 
     private void doMagic(){
-        SearchedActivity.this.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                titleText.setText(entity.getMemeTitle());
-                scoreText.setText(entity.getMemeScore());
-                memeName = entity.getMemeName();
-                Picasso.get().load("http://192.168.1.41:8080/images/" + entity.getMemeName()).fit().into(imageView);
-            }
-        });
+        if(entity.succeed() == 0) {
+            errorText.setVisibility(View.INVISIBLE);
+            layout.setVisibility(View.VISIBLE);
+            SearchedActivity.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    titleText.setText(entity.getMemeTitle());
+                    scoreText.setText(entity.getMemeScore());
+                    memeName = entity.getMemeName();
+                    Picasso.get().load("http://" + Host.IP + ":8080/images/" + entity.getMemeName()).fit().into(imageView);
+                }
+            });
+        }else if(entity.succeed() == 2){
+            Intent intent = new Intent(SearchedActivity.this, LoginActivity.class);
+            finish();
+            startActivity(intent);
+            Toast.makeText(this, "Token is no longer valid!", Toast.LENGTH_SHORT).show();
+            overridePendingTransition(0, 0);
+        }else{
+            errorText.setText("Server Error occured!");
+            errorText.setVisibility(View.VISIBLE);
+            layout.setVisibility(View.INVISIBLE);
+        }
 
     }
 

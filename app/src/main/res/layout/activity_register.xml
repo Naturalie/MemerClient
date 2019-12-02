@@ -12,6 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="420dp"
+        android:autofillHints=""
         android:background="#00FFFFFF"
         android:ems="10"
         android:hint="Login"
@@ -22,41 +23,35 @@
         app:layout_constraintHorizontal_bias="0.515"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.886" />
 
-    <EditText
-        android:id="@+id/passwordInput"
-        style="@style/Base.Widget.MaterialComponents.TextInputEditText"
+    <Button
+        android:id="@+id/buttonRegister"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="336dp"
-        android:background="#00FFFFFF"
-        android:ems="10"
-        android:hint="Password"
-        android:inputType="textPassword"
+        android:background="@color/colorPrimaryDark"
+        android:onClick="sendRegister"
+        android:text="register"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.515"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginText"
-        app:layout_constraintVertical_bias="0.052" />
+        app:layout_constraintTop_toBottomOf="@+id/emailInput"
+        app:layout_constraintVertical_bias="0.427" />
 
-    <EditText
-        android:id="@+id/rePasswordInput"
-        style="@style/Base.Widget.MaterialComponents.TextInputEditText"
+    <TextView
+        android:id="@+id/registerTo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="260dp"
-        android:background="#00FFFFFF"
-        android:ems="10"
-        android:hint="Password"
-        android:inputType="textPassword"
+        android:text="Register to"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.515"
+        app:layout_constraintHorizontal_bias="0.352"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginText"
-        app:layout_constraintVertical_bias="0.052" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.113" />
 
     <EditText
         android:id="@+id/emailInput"
@@ -64,30 +59,36 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="180dp"
+        android:autofillHints=""
         android:background="#00FFFFFF"
         android:ems="10"
-        android:hint="E-mail"
+        android:hint="Email"
         android:inputType="textEmailAddress"
         android:scrollbarStyle="outsideOverlay"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.515"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="0.138" />
+        app:layout_constraintTop_toBottomOf="@+id/rePasswordInput"
+        app:layout_constraintVertical_bias="0.309" />
 
-    <TextView
-        android:id="@+id/registerTo"
+    <EditText
+        android:id="@+id/rePasswordInput"
+        style="@style/Base.Widget.MaterialComponents.TextInputEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Register To"
-        android:textSize="24sp"
+        android:layout_marginBottom="260dp"
+        android:autofillHints=""
+        android:background="#00FFFFFF"
+        android:ems="10"
+        android:hint="Re-password"
+        android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.352"
+        app:layout_constraintHorizontal_bias="0.515"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.154" />
+        app:layout_constraintTop_toBottomOf="@+id/passwordInput"
+        app:layout_constraintVertical_bias="0.395" />
 
     <TextView
         android:id="@+id/memer2"
@@ -101,19 +102,23 @@
         app:layout_constraintHorizontal_bias="0.632"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.211" />
+        app:layout_constraintVertical_bias="0.168" />
 
-    <Button
-        android:id="@+id/button"
-        style="@style/Widget.AppCompat.Button.Colored"
+    <EditText
+        android:id="@+id/passwordInput"
+        style="@style/Base.Widget.MaterialComponents.TextInputEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark"
-        android:onClick="sendRegister"
-        android:text="Register"
+        android:layout_marginBottom="364dp"
+        android:autofillHints=""
+        android:background="#00FFFFFF"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.515"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailInput" />
+        app:layout_constraintTop_toBottomOf="@+id/loginInput" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

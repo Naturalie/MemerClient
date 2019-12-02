@@ -10,6 +10,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 
+import connection.handlers.Host;
 import entities.Meme;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -20,7 +21,7 @@ import okhttp3.Response;
 public class GetMeme {
     private final SharedPreferences prefs;
     private String memeTitle, memeScore, memeName;
-    private boolean isSuccess = false;
+    private int isSuccess = 3;
 
     public String getMemeTitle() {
         return memeTitle;
@@ -39,10 +40,9 @@ public class GetMeme {
         isSuccess = doMagic();
     }
 
-    private boolean doMagic(){
-        try{
+    private int doMagic(){
             OkHttpClient client = new OkHttpClient();
-            String url = "http://192.168.1.41:8080/random";
+            String url = "http://"+ Host.IP + ":8080/random";
             Request request = new Request.Builder()
                     .addHeader("Authorization","Bearer "+ prefs.getString("token",""))
                     .url(url)
@@ -50,31 +50,40 @@ public class GetMeme {
             Response response = null;
             try {
                 response = client.newCall(request).execute();
+
             } catch (IOException e) {
                 e.printStackTrace();
+            }catch (IllegalStateException e) {
+                e.printStackTrace();
             }
-            if(response.isSuccessful()){
-                final String myResponse = response.body().string();
-
-                if(response.code() == 200){
-                    System.out.println(myResponse);
-                    Meme meme = new Meme(myResponse);
-                    memeTitle = meme.getImageTitle();
-                    memeScore = meme.getImageScore();
-                    memeName = meme.getImageName();
-                    return true;
+            try {
+                if(response.isSuccessful()) {
+                    final String myResponse;
+                        myResponse = response.body().string();
+                        if (response.code() == 200) {
+                            Meme meme = new Meme(myResponse);
+                            memeTitle = meme.getImageTitle();
+                            memeScore = meme.getImageScore();
+                            memeName = meme.getImageName();
+                            return 0;
+                        }
+                } if(response.code() == 403){
+                    return 2;
+                }else {
+                    return 3;
                 }
+            }catch (IOException e) {
+                e.printStackTrace();
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        }catch (NullPointerException e){
-            System.out.println("Null");
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-        return false;
+
+            return 3;
     }
 
-    public boolean succeed(){
+    public int isSucess(){
         return isSuccess;
     }
 }
