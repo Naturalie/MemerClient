@@ -91,13 +91,13 @@
         android:id="@+id/constraintLayout"
         android:layout_width="413dp"
         android:layout_height="463dp"
-        android:layout_marginBottom="147dp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view10">
+        app:layout_constraintTop_toBottomOf="@+id/view10"
+        app:layout_constraintVertical_bias="0.407">
 
         <View
             android:id="@+id/view8"
