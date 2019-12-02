@@ -16,27 +16,36 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
-    public SharedPreferences preferences = null;
-    EditText login, password;
+    public static SharedPreferences preferences;
+    private EditText login, password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        setView();
+        setPolicy();
+
+
+    }
+    private void setView(){
         login = findViewById(R.id.loginText);
         password = findViewById(R.id.passwordText);
+    }
+    private void setPolicy(){
+        //policy set
         StrictMode.ThreadPolicy policy = new
         StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
     }
-
     public void sendLogin(View view){
         final User JSON = new User(login.getText().toString(),password.getText().toString());
         final LoginConnection connection = new LoginConnection(JSON);
         saveToken(connection.getTokenString());
 
         if(connection.getSuccess()){
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             this.finish();
             startActivity(intent);
             this.overridePendingTransition(0, 0);
@@ -57,9 +66,7 @@ public class LoginActivity extends AppCompatActivity {
         preferences = getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
         preferences.edit().putString("token", token).apply();
     }
-    public String getToken(){
-        return preferences.getString("token","");
-    }
+
 
 }
 

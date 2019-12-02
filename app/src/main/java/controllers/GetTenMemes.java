@@ -1,44 +1,46 @@
 package controllers;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
+import android.util.Log;
+
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import connection.handlers.Host;
 import entities.Meme;
+import entities.TenMemes;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class SearchedMeme {
+public class GetTenMemes {
     private final SharedPreferences prefs;
-    private String memeTitle, memeScore, memeName, intentExtra;
     private int isSuccess = 3;
+    private int page;
+    private List<Meme> meme;
 
-    public String getMemeTitle() {
-        return memeTitle;
+    public List<Meme> getMemeList(){
+        return this.meme;
     }
 
-    public String getMemeScore() {
-        return memeScore;
-    }
-
-    public String getMemeName() {
-        return memeName;
-    }
-
-    public SearchedMeme(SharedPreferences prefs, String intentExtra){
+    public GetTenMemes(SharedPreferences prefs, int page){
         this.prefs = prefs;
-        this.intentExtra = intentExtra;
+        this.page = page;
+        this.meme = new ArrayList<>();
         isSuccess = doMagic();
-
     }
 
     private int doMagic(){
 
             OkHttpClient client = new OkHttpClient();
-            String url = "http://"+ Host.IP + ":8080/getPictureByTitle?title=" + intentExtra;
+            String url = "http://"+ Host.IP + ":8080/getPictures?page=" + Integer.toString(page);
             Request request = new Request.Builder()
                     .addHeader("Authorization","Bearer "+ prefs.getString("token",""))
                     .url(url)
@@ -46,26 +48,25 @@ public class SearchedMeme {
             Response response = null;
             try {
                 response = client.newCall(request).execute();
+
             } catch (IOException e) {
                 e.printStackTrace();
-            }
-            try{
-            if(response.isSuccessful()){
-                final String myResponse = response.body().string();
-
-                if(response.code() == 200){
-                    Meme meme = new Meme(myResponse);
-                    memeTitle = meme.getImageTitle();
-                    memeScore = meme.getImageScore();
-                    memeName = meme.getImageName();
-                    return 0;
-                }
-            }
-            if(response.code() == 403){
-                return 2;
-            }else {
                 return 3;
             }
+            try{
+                if(response.isSuccessful()){
+                    final String myResponse = response.body().string();
+                    if(response.code() == 200){
+                        TenMemes tm = new TenMemes(myResponse);
+                        meme = tm.getListMemes();
+                        return 0;
+                    }
+                }
+                if(response.code() == 403){
+                    return 2;
+                }else {
+                    return 3;
+                }
             }catch (NullPointerException e){
                 e.printStackTrace();
                 return 3;
@@ -80,3 +81,4 @@ public class SearchedMeme {
         return isSuccess;
     }
 }
+

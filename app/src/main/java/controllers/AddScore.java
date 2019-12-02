@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import java.io.IOException;
 
+import connection.handlers.Host;
 import entities.Score;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -14,12 +15,12 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class AddScore {
-
-    public AddScore(SharedPreferences prefs, String memeName, Activity activity){
+private int succeed = 2;
+    public AddScore(SharedPreferences prefs, String memeName){
         try {
             OkHttpClient client = new OkHttpClient();
             MediaType MEDIA_TYPE = MediaType.parse("application/json");
-            String url = "http://192.168.1.41:8080/increaseScore";
+            String url = "http://"+ Host.IP + ":8080/increaseScore";
             Score score = new Score(memeName, prefs.getString("token", ""));
 
             RequestBody body = RequestBody.create(MEDIA_TYPE, score.getScoreJSON().toString());
@@ -34,28 +35,35 @@ public class AddScore {
             Response response = null;
             try {
                 response = client.newCall(request).execute();
+                if(response.isSuccessful()){
+                    String myReponse = response.body().string();
+                    if(response.code() == 200){
+                        if(myReponse.equals("false")){
+                            succeed = 1;
+                        }else{
+                            succeed = 0;
+                        }
+                    }else if(response.code() == 403){
+                        succeed = 2;
+                    }else{
+                        succeed = 3;
+                    }
+                }
             } catch (IOException e) {
                 e.printStackTrace();
+                succeed = 2;
             }
-            if(response.isSuccessful()){
-                String myReponse = response.body().string();
-                System.out.println(response.code());
-                if(response.code() == 200){
-                    System.out.println(myReponse);
-                    if(myReponse.equals("false")){
-                        Toast.makeText(activity,"You have already liked that! You silly!",Toast.LENGTH_LONG).show();
-                    }else{
-                        Toast.makeText(activity,"It's getting even hotter ;)",Toast.LENGTH_LONG).show();
-                    }
-                }else{
-                    Toast.makeText(activity,"Something went wrong!",Toast.LENGTH_LONG).show();
-                }
 
-            }
         }catch (NullPointerException e){
-            System.out.println("Null");
+            e.printStackTrace();
+            succeed = 2;
         } catch (Exception e){
             e.printStackTrace();
+            succeed = 2;
         }
+    }
+
+    public int getSucceed(){
+        return this.succeed;
     }
 }

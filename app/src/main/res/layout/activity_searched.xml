@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".SearchedActivity">
 
+    <TextView
+        android:id="@+id/errorView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/linearLayout" />
+
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="409dp"
@@ -65,30 +76,6 @@
     </LinearLayout>
 
     <View
-        android:id="@+id/view8"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#000000"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.796" />
-
-    <View
-        android:id="@+id/view9"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#000000"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.146" />
-
-    <View
         android:id="@+id/view10"
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -100,29 +87,63 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
         app:layout_constraintVertical_bias="0.0" />
 
-    <TextView
-        android:id="@+id/scoreView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        android:textColor="#000000"
-        app:layout_constraintBottom_toTopOf="@+id/view9"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.821"
-        app:layout_constraintStart_toEndOf="@+id/titleView"
-        app:layout_constraintTop_toBottomOf="@+id/view3"
-        app:layout_constraintVertical_bias="0.91" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="413dp"
-        android:layout_height="402dp"
+        android:layout_height="463dp"
         android:layout_marginBottom="147dp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.666"
-        app:layout_constraintStart_toStartOf="@id/view8"
-        app:layout_constraintTop_toBottomOf="@+id/view9">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view10">
+
+        <View
+            android:id="@+id/view8"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#000000"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/hotmemeButton"
+            app:layout_constraintVertical_bias="0.941" />
+
+        <View
+            android:id="@+id/view9"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#000000"
+            app:layout_constraintBottom_toTopOf="@+id/imageView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.66" />
+
+        <TextView
+            android:id="@+id/titleView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            app:layout_constraintBottom_toTopOf="@+id/view9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.072"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <TextView
+            android:id="@+id/scoreView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            app:layout_constraintBottom_toTopOf="@+id/view9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.922"
+            app:layout_constraintStart_toEndOf="@+id/titleView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
 
         <Button
             android:id="@+id/hotmemeButton"
@@ -154,17 +175,5 @@
             app:layout_constraintVertical_bias="0.347"
             tools:srcCompat="@tools:sample/backgrounds/scenic" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <TextView
-        android:id="@+id/titleView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#000000"
-        app:layout_constraintBottom_toTopOf="@+id/view9"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.07"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view10"
-        app:layout_constraintVertical_bias="0.948" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
