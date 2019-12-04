@@ -39,17 +39,17 @@ public class RegisterConnection {
         } catch (IllegalStateException e) {
             e.printStackTrace();
         }
-        if (response.isSuccessful()) {
-            try {
+        try {
+            if (response.isSuccessful()) {
                 if (response.code() == 200) {
                     RegisterException re = new RegisterException(response.body().string());
                     return re.getError();
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
-
-        } return 9;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 9;
     }
     public int getSuccess(){
         return this.success;
